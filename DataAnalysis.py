@@ -54,7 +54,6 @@ def Bivariate(data,x,y,kind,bins = 64):
         tab = pd.crosstab(data[y], data[x], normalize = 'index')
         print(tab)
 
-
         mosaic(data,[x,y])
         plt.show()
 
@@ -79,20 +78,20 @@ def Bivariate(data,x,y,kind,bins = 64):
         res = spst.f_oneway(*data_list)
         print('t = ',res[0])
         print('p-Val = ',res[1])
-        
-
- 
-    
+           
     return res
     
     
-def Unvariate(data,column,kind,opt = False):
+def Unvariate(data,column,kind,opt = False, bins = 32):
     if kind == 'num':
         
-        plt.subplot(1,2,1)
-        sns.displot(data[column])
-        
-        plt.subplot(1,2,2)
+        plt.subplot(1,3,1)
+        plt.hist(data[column],bins=bins,edgecolor='gray')
+                
+        plt.subplot(1,3,2)
+        sns.kdeplot(x=column,data=data)
+               
+        plt.subplot(1,3,3)
         box = plt.boxplot(data[column],vert=opt)
         
         plt.tight_layout()
